@@ -26,12 +26,12 @@ return new class extends Migration
             IN `p_limit` INT
             )
            BEGIN	
-               SELECT message ,m.created_at as fecha From messages m
-               INNER JOIN users u ON u.id = m.user_id_receive    
-               WHERE (m.user_id_send=1 OR m.user_id_send=2)
-               AND (m.user_id_receive=1 OR m.user_id_receive=2)
-               ORDER BY m.created_at ASC
-                LIMIT p_offset, p_limit;
+           SELECT message ,m.created_at as fecha From messages m
+           INNER JOIN users u ON u.id = m.user_id_receive    
+           WHERE (m.user_id_send=p_user_id_send OR m.user_id_send=p_user_id_receive)
+           AND (m.user_id_receive=p_user_id_receive OR m.user_id_receive=p_user_id_send)
+           ORDER BY m.created_at ASC
+            LIMIT p_offset, p_limit;
            END";
         DB::unprepared($procedure);
     }

@@ -5,6 +5,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Message\MessageShowController;
+use App\Http\Controllers\Message\MessageSendController;
+use App\Http\Controllers\User\UserStoreController;
+use App\Http\Controllers\User\UserUpdateController;
+use App\Http\Controllers\User\UserDestroyController;
+use App\Http\Controllers\User\UserShowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,15 +28,14 @@ use App\Http\Controllers\MessageController;
 //});
 
 
+//------------------------------------------------------------------------------
+Route::post('/store-user', UserStoreController::class); // crea un usuario
+Route::get('/show-user', UserShowController::class); //muestra todos los usuarios
+Route::post('/update-user/{id}', UserUpdateController::class); //recibiendo los datos de request para actualizar
+Route::put('/update-user/{id}', UserUpdateController::class); // actualiza un usuario
+Route::delete('/delete-user/{id}', UserDestroyController::class); //elimina un usuario
 
-Route::get('/usuarios', [UserController::class,'index']); //muestra todos los usuarios
-Route::post('/usuarios', [UserController::class,'store']); // crea un usuario
-Route::post('/usuario/{id}', [UserController::class,'update']); //recibiendo los datos de request para actualizar
-Route::put('/usuario/{id}', [UserController::class,'update']); // actualiza un usuario
-Route::delete('/usuario/{id}', [UserController::class,'destroy']); //elimina un usuario
 
-
-Route::post('/mensaje', [MessageController::class,'sendMessage']);
-Route::post('/mostrar_mensajes', [MessageController::class,'showMessages']);
-Route::get('/mostrar_mensajes', [MessageController::class,'showMessages']);
-Route::post('/subir_archivo', [MessageController::class,'sendFile']);
+Route::post('/send-messages', MessageSendController::class); // envia el mensaje
+Route::get('/show-messages', MessageShowController::class); //muestra los mensajes paginados de a 15 por pagina
+//Route::post('/upload-file', MessageSendController::class);// subir el archivo relacionado con los mensajes
